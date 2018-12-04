@@ -22,6 +22,10 @@ As a basis for the server, I did not take heavy framework. I take the simple [sk
 
 For run a server - you can create a the docker container(php7.2 + nginx) as the main platform, and put server code here. [Example](docker-project). If you have any problem with a start please contact me. Or if you have a exist server put server code here. 
 
+## API documentation
+
+* [POST move](https://github.com/dykyi-roman/tic-tac-toe/blob/master/docs/api.md) 
+
 ## Install
 For up you server you need run only one command:
 ```composer install```
