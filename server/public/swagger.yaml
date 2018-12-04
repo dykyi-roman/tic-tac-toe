@@ -1,0 +1,27 @@
+openapi: 3.0.0
+info:
+  title: 'Tic Tac Toe API'
+  version: '0.1'
+paths:
+  /move:
+    post:
+      operationId: 'Dykyi\Application\Controllers\TicTacToeController::move'
+      parameters:
+        -
+          name: boardState
+          in: query
+          description: 'Current board state'
+          required: true
+          schema:
+            type: string
+        -
+          name: playerUnit
+          in: query
+          description: 'Player unit representation'
+          required: true
+          schema:
+            type: string
+          example: X
+      responses:
+        '200':
+          description: 'Coordinate for the next move'
