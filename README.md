@@ -17,8 +17,21 @@ The application have an API that can be called to make the moves, and a web inte
 
 ``` TODO ```
 
+# MiniMax Algorithm
+
+MiniMax algorithm is used to implement basic AI or game logic in 2 player games. The most common scenario is implementing a perfect Tic-Tac-Toe player. In the game of Tic-Tac-Toe, there are two players, player X and player O. Now imagine there’s a scoreboard which displays a huge number called “score”.
+
+* If X wins, the score increases by 10.
+
+* If O wins, the score is decreased by 10.
+
+* If it is a draw, then the score remains unchanged.
+
+So now, the bigger the number score has, the better it is for X, which means X will try to maximize score as much as possible. Similarly, the lesser the score, the better it is for O, so O will try to minimize the score as much as possible.
+To understand this better, read the [article](http://theoryofprogramming.com/2017/12/12/minimax-algorithm/).
+
 # Server
-As a basis for the server, I did not take heavy framework. I take the simple [skeleton](https://github.com/dykyi-roman/no-framework-skeleton)
+For realization, I did not take heavy framework. I take my simple [skeleton](https://github.com/dykyi-roman/no-framework-skeleton).
 
 For run a server - you can create a the docker container(php7.2 + nginx) as the main platform, and put server code here. [Example](docker-project). If you have any problem with a start please contact me. Or if you have a exist server put server code here. 
 
@@ -41,7 +54,11 @@ after that creating a `.env` file with server configuration.
 
 # Client
 
-``` TODO ```
+The client code lies in the [Client](https://github.com/dykyi-roman/tic-tac-toe/tree/master/client) folder.
+
+## Install
+
+For run a client you just a need change for your `path` a `GAME_URL_API` const, in the main.js file.
 
 ## Author
 [Dykyi Roman](https://www.linkedin.com/in/roman-dykyi-43428543/), e-mail: [mr.dukuy@gmail.com](mailto:mr.dukuy@gmail.com)
