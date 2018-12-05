@@ -30,7 +30,7 @@ A JSON object with key "status" and value of 200, and key "result" with value ar
 ## Errors
 All known errors cause the resource to return HTTP error code header together with a JSON array containing at least 'status' and 'error' keys describing the source of error.
 
-- **404 Not Found** — The photo was not found.
+- **405 Not Found** — Method Not Allowed
 
 ***
 
