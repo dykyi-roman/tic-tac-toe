@@ -28,7 +28,7 @@ MiniMax algorithm is used to implement basic AI or game logic in 2 player games.
 * If it is a draw, then the score remains unchanged.
 
 So now, the bigger the number score has, the better it is for X, which means X will try to maximize score as much as possible. Similarly, the lesser the score, the better it is for O, so O will try to minimize the score as much as possible.
-To understand this better, read the [article](http://theoryofprogramming.com/2017/12/12/minimax-algorithm/).
+To understand this better, read the [article](https://www.neverstopbuilding.com/blog/minimax) or [article](https://en.wikipedia.org/wiki/Minimax) or [article](http://theoryofprogramming.com/2017/12/12/minimax-algorithm/).
 
 # Server
 For realization, I did not take heavy framework. I take my simple [skeleton](https://github.com/dykyi-roman/no-framework-skeleton).
