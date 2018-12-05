@@ -41,9 +41,9 @@ All known errors cause the resource to return HTTP error code header together wi
 
 **Body**
 
-    boardState={}
+    boardState="{{'', '', ''},{'', '', ''},{'', '', ''}}"
     
-    playerUnit=X
+    playerUnit="X"
 
 **Return**
 ``` json
