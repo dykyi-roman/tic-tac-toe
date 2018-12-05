@@ -49,7 +49,7 @@ All known errors cause the resource to return HTTP error code header together wi
 ``` json
 {
   "status":200,
-  "result":"{2, 0, 'O'}",
+  "result":"{0, 0, 'O'}",
   "error": null
 }
 ```
