@@ -6,16 +6,17 @@ The application have an API that can be called to make the moves, and a web inte
 
 :+1: The game inside
 
-:+1: API 
+:+1: API
 
-**Considerations:**
-- [x] Testing 
-- [x] GIT versioning 
-- [x] Instructions how to view/run the application/service
+:+1: Test coverage
+
+**Feature:**
+- [ ] Cache warm before first start
+- [ ] To expand API functions
 
 # Example
 
-``` TODO ```
+![image](https://github.com/dykyi-roman/tic-tac-toe/blob/master/docs/example.gif)
 
 # MiniMax Algorithm
 
