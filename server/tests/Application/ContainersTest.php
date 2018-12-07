@@ -3,8 +3,8 @@
 namespace Dykyi\Test\Application;
 
 use Dykyi\Application\Containers;
-use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
+use Stash\Interfaces\PoolInterface;
 
 /**
  * Class ContainersTest
@@ -24,7 +24,7 @@ class ContainersTest extends TestCase
         $container = Containers::init();
         $this->assertInstanceOf(Containers::class, $container);
 
-        $client = $container->get('Guzzle');
-        $this->assertInstanceOf(Client::class , $client);
+        $pool = $container->get(PoolInterface::class);
+        $this->assertInstanceOf(PoolInterface::class , $pool);
     }
 }

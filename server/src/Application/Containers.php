@@ -2,8 +2,6 @@
 
 namespace Dykyi\Application;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\Setup;
 use Dotenv\Dotenv;
 use Dykyi\Infrastructure\Template\MustacheTemplate;
 use Dykyi\Infrastructure\Template\TemplateInterface;
@@ -12,18 +10,11 @@ use Interop\Container\ContainerInterface;
 use Monolog\Handler\FirePHPHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use SimpleBus\Command\Bus\CommandBus;
-use SimpleBus\Message\Bus\MessageBus;
-use SimpleBus\Message\Bus\Middleware\FinishesHandlingMessageBeforeHandlingNext;
-use SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware;
-use SimpleBus\Message\CallableResolver\CallableMap;
-use SimpleBus\Message\CallableResolver\ServiceLocatorAwareCallableResolver;
-use SimpleBus\Message\Handler\DelegatesToMessageHandlerMiddleware;
-use SimpleBus\Message\Handler\Resolver\NameBasedMessageHandlerResolver;
-use SimpleBus\Message\Name\ClassBasedNameResolver;
+use Psr\Log\LoggerInterface;
+use Stash\Interfaces\PoolInterface;
 use Stash\Pool as Cache;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Whoops\Run as Whoops;
 use Zend\ServiceManager\ServiceManager;
 
@@ -60,52 +51,8 @@ final class Containers
                         return new GuzzleClient();
                     },
 
-                    'Cache' => function () {
-                        return new Cache(new \Stash\Driver\Ephemeral);
-                    },
-
-                    Request::class => function () {
-//                        return new
-                    },
-
-                    EntityManager::class => function (ContainerInterface $container) {
-                        $secyrity = $container->get('Security');
-                        $connectionParams = [
-                            'dbname' => $secyrity['bd_dbname'],
-                            'user' => $secyrity['db_user'],
-                            'password' => $secyrity['db_password'],
-                            'host' => $secyrity['db_host'],
-                            'driver' => 'pdo_mysql',
-                        ];
-
-                        $config = Setup::createAnnotationMetadataConfiguration([__DIR__], false);
-                        return EntityManager::create($connectionParams, $config);
-                    },
-
-                    CommandBus::class => function (): MessageBus {
-                        $bus = new MessageBusSupportingMiddleware();
-                        $bus->appendMiddleware(new FinishesHandlingMessageBeforeHandlingNext());
-                        $commandHandlerMap = new CallableMap(
-                            [
-                                //                            SomeActionCommand::class => SomeHandler::class,
-                            ],
-                            new ServiceLocatorAwareCallableResolver(
-                                function ($serviceId) {
-                                    $handler = (new \Auryn\Injector())->make($serviceId);
-                                    //TODO: some logic here
-                                    return $handler;
-                                }
-                            )
-                        );
-                        $commandHandlerResolver = new NameBasedMessageHandlerResolver(
-                            new ClassBasedNameResolver(), $commandHandlerMap
-                        );
-                        $bus->appendMiddleware(new DelegatesToMessageHandlerMiddleware($commandHandlerResolver));
-                        return $bus;
-                    },
-
-                    EventDispatcher::class => function (): EventDispatcher {
-                        return new EventDispatcher();
+                    PoolInterface::class => function () {
+                        return new Cache(new \Stash\Driver\FileSystem());
                     },
 
                     Whoops::class => function () {
@@ -116,7 +63,12 @@ final class Containers
                         return $whoops;
                     },
 
-                    Logger::class => function (ContainerInterface $container) {
+                    EventDispatcherInterface::class => function (): EventDispatcher {
+                        return new EventDispatcher();
+                    },
+
+
+                    LoggerInterface::class => function (ContainerInterface $container) {
                         $config = $container->get('Config');
 
                         $logger = new Logger('app');
@@ -135,11 +87,19 @@ final class Containers
         );
     }
 
+    /**
+     * @return Containers
+     */
     public static function init(): Containers
     {
         return new self();
     }
 
+    /**
+     * @param string $name
+     *
+     * @return mixed
+     */
     public function get(string $name)
     {
         if (!$this->handles instanceof ServiceManager) {
@@ -148,5 +108,4 @@ final class Containers
 
         return $this->handles->get($name);
     }
-
 }

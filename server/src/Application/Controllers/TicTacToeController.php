@@ -3,7 +3,14 @@
 namespace Dykyi\Application\Controllers;
 
 use Dykyi\Application\Containers;
+use Dykyi\Domain\ValueObject\Board;
+use Dykyi\Infrastructure\Service\GameServiceService;
+use Dykyi\Infrastructure\Service\MoveCacheService;
 use Dykyi\Infrastructure\Template\TemplateInterface;
+use Exception;
+use Psr\Log\LoggerInterface;
+use Stash\Interfaces\PoolInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +27,15 @@ class TicTacToeController
     /** @var mixed */
     private $engine;
 
+    /** @var LoggerInterface */
+    private $logger;
+
+    /** @var PoolInterface */
+    private $cache;
+
+    /** @var mixed */
+    private $dispatcher;
+
     /**
      * DefaultController constructor.
      *
@@ -28,6 +44,9 @@ class TicTacToeController
     public function __construct(Containers $containers)
     {
         $this->engine = $containers->get(TemplateInterface::class);
+        $this->logger = $containers->get(LoggerInterface::class);
+        $this->cache = $containers->get(PoolInterface::class);
+        $this->dispatcher = $containers->get(EventDispatcherInterface::class);
     }
 
     /**
@@ -50,8 +69,10 @@ class TicTacToeController
      *        name="boardState",
      *        in="query",
      *        required=true,
-     *        description="Current board state",
-     *        @OA\Schema(type="string")
+     *        description="Current board state (JSON format)",
+     *        @OA\Schema(
+     *            type="string",format="json", default={{"","",""},{"","",""},{"","",""}}
+     *        ),
      *     ),
      *    @OA\Parameter(
      *        name="playerUnit",
@@ -65,16 +86,33 @@ class TicTacToeController
      *
      * @param Request $request
      *
+     * @todo (json_decode) - Hack for swagger. Because they not normal work with array in array. Rewrite in the feature.
+     *
      * @return JsonResponse
      */
+    //
     public function move(Request $request): JsonResponse
     {
         $boardState = $request->get('boardState');
-        $playerUnit = $request->get('playerUnit');
+        $boardState = \is_string($boardState) ? json_decode($boardState, true) : (array)$boardState;
+        $playerUnit = (string)$request->get('playerUnit');
 
-        return JsonResponse::create([
-            'boardState' => $boardState,
-            'playerUnit' => $playerUnit,
-        ]);
+        try {
+            $dto = (new GameServiceService($this->dispatcher, new Board($boardState), $playerUnit))->move();
+            if ((bool)getenv('cache_mode')) {
+                $cache = new MoveCacheService($this->cache);
+                $cache->execute(md5(serialize($boardState) . $playerUnit), $dto->jsonSerialize());
+            }
+        } catch (Exception $exception) {
+            return JsonResponse::create([
+                'result' => [],
+                'error' => $exception->getMessage(),
+            ]);
+        }
+
+        $this->logger->info('board', $boardState);
+        $this->logger->info('move', $dto->jsonSerialize());
+
+        return JsonResponse::create($dto->jsonSerialize());
     }
 }

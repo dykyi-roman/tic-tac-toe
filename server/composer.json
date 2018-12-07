@@ -19,20 +19,24 @@
     "symfony/http-foundation": "^4.1",
     "nikic/fast-route": "^1.3",
     "rdlowrey/auryn": "^1.4",
-    "symfony/event-dispatcher": "^4.1",
     "zendframework/zend-servicemanager": "^3.3",
     "mustache/mustache": "^2.12",
-    "guzzlehttp/guzzle": "^6.3",
     "tedivm/stash": "^0.14.2",
-    "zircote/swagger-php": "^3.0"
+    "zircote/swagger-php": "^3.0",
+    "symfony/event-dispatcher": "^4.2",
+    "ext-json": "*"
   },
   "require-dev": {
+    "roave/security-advisories": "dev-master",
     "vlucas/phpdotenv": "^2.4",
     "fzaninotto/faker": "^1.7",
     "symfony/var-dumper": "^4.0",
     "squizlabs/php_codesniffer": "3.*",
     "phpunit/phpunit": "^7.2",
-    "phan/phan": "^0.12.14"
+    "phan/phan": "^0.12.14",
+    "object-calisthenics/phpcs-calisthenics-rules": "^3.4",
+    "symplify/easy-coding-standard": "^5.2",
+    "dg/bypass-finals": "^1.1"
   },
   "autoload": {
     "psr-4": {

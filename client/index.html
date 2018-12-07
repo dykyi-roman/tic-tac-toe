@@ -4,25 +4,30 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Tic tac toe game</title>
     <link rel="stylesheet" href="main.css">
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous">
+    </script>
 </head>
 <body onload="startGame();" align="center">
 <div id="message"> upload...</div>
-<table border="1" frame="void" align="center">
+<table border="1" frame="void" align="center" id="game">
     <tbody>
     <tr>
-        <td id="s1" class="Square" onclick="nextMove(this);"></td>
-        <td id="s2" class="Square" onclick="nextMove(this);"></td>
-        <td id="s3" class="Square" onclick="nextMove(this);"></td>
+        <td id="s0" class="Square" data-field="0" onclick="nextMove(this);"></td>
+        <td id="s1" class="Square" data-field="1" onclick="nextMove(this);"></td>
+        <td id="s2" class="Square" data-field="2" onclick="nextMove(this);"></td>
     </tr>
     <tr>
-        <td id="s4" class="Square" onclick="nextMove(this);"></td>
-        <td id="s5" class="Square" onclick="nextMove(this);"></td>
-        <td id="s6" class="Square" onclick="nextMove(this);"></td>
+        <td id="s3" class="Square" data-field="3" onclick="nextMove(this);"></td>
+        <td id="s4" class="Square" data-field="4" onclick="nextMove(this);"></td>
+        <td id="s5" class="Square" data-field="5" onclick="nextMove(this);"></td>
     </tr>
     <tr>
-        <td id="s7" class="Square" onclick="nextMove(this);"></td>
-        <td id="s8" class="Square" onclick="nextMove(this);"></td>
-        <td id="s9" class="Square" onclick="nextMove(this);"></td>
+        <td id="s6" class="Square" data-field="6" onclick="nextMove(this);"></td>
+        <td id="s7" class="Square" data-field="7" onclick="nextMove(this);"></td>
+        <td id="s8" class="Square" data-field="8" onclick="nextMove(this);"></td>
     </tr>
     </tbody>
 </table>

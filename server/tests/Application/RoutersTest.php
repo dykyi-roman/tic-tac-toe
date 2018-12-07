@@ -22,7 +22,6 @@ class RoutersTest extends TestCase
         $routers = Routers::get();
         $this->assertTrue(is_array($routers));
 
-
         foreach ($routers as $route){
             $this->assertContains($route[0], ['GET', 'POST', 'PUT', 'DELETE']);
 

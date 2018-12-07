@@ -48,7 +48,6 @@ All known errors cause the resource to return HTTP error code header together wi
 **Return**
 ``` json
 {
-  "status":200,
   "result":"{0, 0, 'O'}",
   "error": null
 }

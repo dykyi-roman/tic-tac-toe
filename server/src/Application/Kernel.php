@@ -23,10 +23,10 @@ final class Kernel
      */
     public static function handle(Request $request): Response
     {
-        $routeDefinitionCallback = function (\FastRoute\RouteCollector $r) {
+        $routeDefinitionCallback = function (\FastRoute\RouteCollector $routeCollector) {
             $routes = Routers::get();
             foreach ($routes as $route) {
-                $r->addRoute($route[0], $route[1], $route[2]);
+                $routeCollector->addRoute($route[0], $route[1], $route[2]);
             }
         };
 
@@ -41,7 +41,6 @@ final class Kernel
             case \FastRoute\Dispatcher::FOUND:
                 $className = $routeInfo[1][0];
                 $method = $routeInfo[1][1];
-                $vars = $routeInfo[2];
                 $injector = new \Auryn\Injector();
                 $injector->share(Request::class);
                 $class = $injector->make($className);

@@ -10,9 +10,12 @@ The application have an API that can be called to make the moves, and a web inte
 
 :+1: Test coverage
 
+:+1: Code amalyze coverage (PSR2 standart, Phan, Codesniffe, Calisthenics rules)
+
 **Feature:**
 - [ ] Cache warm before first start
 - [ ] To expand API functions
+- [ ] Make server answer faster
 
 # Example
 
@@ -36,6 +39,8 @@ For realization, I did not take heavy framework. I take my simple [skeleton](htt
 
 For run a server - you can create a the docker container(php7.2 + nginx) as the main platform, and put server code here. [Example](docker-project). If you have any problem with a start please contact me. Or if you have a exist server put server code here. 
 
+![image](https://github.com/dykyi-roman/tic-tac-toe/blob/master/docs/api.png)
+
 ## API documentation
 
 * [POST move](https://github.com/dykyi-roman/tic-tac-toe/blob/master/docs/api.md) 
@@ -47,11 +52,11 @@ after that creating a `.env` file with server configuration.
 
 ## Configuration
 
-| key        | description                |
-| ---------- |----------------------------|
-| log_path   | Path for you log folder    |
-| debug_mode | debag mode                 |
-| cache_ttl  | cache ttl meaning          |
+| key        | description             |type   |
+| ---------- |-------------------------|:-----:|
+| log_path   | Path for you log folder |string |
+| debug_mode | debag mode              |bool   |
+| cache_mode | cache mode              |bool   |
 
 # Client
 

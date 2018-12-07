@@ -10,10 +10,24 @@ paths:
         -
           name: boardState
           in: query
-          description: 'Current board state'
+          description: 'Current board state (JSON format)'
           required: true
           schema:
             type: string
+            format: json
+            default:
+              -
+                - ''
+                - ''
+                - ''
+              -
+                - ''
+                - ''
+                - ''
+              -
+                - ''
+                - ''
+                - ''
         -
           name: playerUnit
           in: query
