@@ -21,11 +21,10 @@ class MoveDTOTest extends TestCase
     {
         $dto = new MoveDTO(new Move(0, 0), 'X');
 
-        $this->assertInstanceOf(\JsonSerializable::class, $dto);
-        $this->assertIsArray($dto->jsonSerialize());
-        $this->assertCount(2, $dto->jsonSerialize());
-        $this->assertArrayHasKey('result', $dto->jsonSerialize());
-        $this->assertArraySubset([0, 0, 'X'], $dto->jsonSerialize()['result']);
-        $this->assertArrayHasKey('error', $dto->jsonSerialize());
+        $this->assertIsArray($dto->toArray());
+        $this->assertCount(2, $dto->toArray());
+        $this->assertArrayHasKey('result', $dto->toArray());
+        $this->assertArraySubset([0, 0, 'X'], $dto->toArray()['result']);
+        $this->assertArrayHasKey('error', $dto->toArray());
     }
 }

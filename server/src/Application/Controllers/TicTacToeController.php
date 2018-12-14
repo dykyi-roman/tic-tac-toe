@@ -3,6 +3,7 @@
 namespace Dykyi\Application\Controllers;
 
 use Dykyi\Application\Containers;
+use Dykyi\Domain\Model\MoveAction;
 use Dykyi\Domain\ValueObject\Board;
 use Dykyi\Infrastructure\Service\GameServiceService;
 use Dykyi\Infrastructure\Service\MoveCacheService;
@@ -98,10 +99,16 @@ class TicTacToeController
         $playerUnit = (string)$request->get('playerUnit');
 
         try {
-            $dto = (new GameServiceService($this->dispatcher, new Board($boardState), $playerUnit))->move();
+            $response = (new GameServiceService(
+                $this->dispatcher,
+                new MoveAction($playerUnit === 'X' ? 'O' : 'X', $playerUnit),
+                new Board($boardState),
+                $playerUnit
+            ))->move();
+
             if ((bool)getenv('cache_mode')) {
                 $cache = new MoveCacheService($this->cache);
-                $cache->execute(md5(serialize($boardState) . $playerUnit), $dto->jsonSerialize());
+                $cache->execute(md5(serialize($boardState) . $playerUnit), $response->toArray());
             }
         } catch (Exception $exception) {
             return JsonResponse::create([
@@ -111,8 +118,8 @@ class TicTacToeController
         }
 
         $this->logger->info('board', $boardState);
-        $this->logger->info('move', $dto->jsonSerialize());
+        $this->logger->info('move', $response->toArray());
 
-        return JsonResponse::create($dto->jsonSerialize());
+        return JsonResponse::create($response->toArray());
     }
 }

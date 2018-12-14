@@ -6,9 +6,9 @@ use Dykyi\Domain\MoveInterface;
 use Dykyi\Domain\ValueObject\Move;
 
 /**
- * Class Game
+ * Class MoveAction
  */
-final class Game implements MoveInterface
+final class MoveAction implements MoveInterface
 {
     /** @var string */
     private $robot;
@@ -26,14 +26,6 @@ final class Game implements MoveInterface
     {
         $this->human = $human;
         $this->robot = $robot;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRobotUnit(): string
-    {
-        return $this->robot;
     }
 
     /**

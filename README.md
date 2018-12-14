@@ -8,7 +8,7 @@ The application have an API that can be called to make the moves, and a web inte
 
 :+1: API
 
-:+1: Test coverage
+:+1: Test coverage:: OK (18 tests, 40 assertions)
 
 :+1: Code amalyze coverage (PSR2 standart, Phan, Codesniffe, Calisthenics rules)
 

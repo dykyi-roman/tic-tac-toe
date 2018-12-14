@@ -52,7 +52,7 @@ final class Containers
                     },
 
                     PoolInterface::class => function () {
-                        return new Cache(new \Stash\Driver\FileSystem());
+                        return new Cache(new \Stash\Driver\Ephemeral());
                     },
 
                     Whoops::class => function () {

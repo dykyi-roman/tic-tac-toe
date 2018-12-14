@@ -2,28 +2,17 @@
 
 namespace Dykyi\Tests\Domain\Model;
 
-use Dykyi\Domain\Model\Game;
+use Dykyi\Domain\Model\MoveAction;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class GameTest
  *
- * @coversDefaultClass \Dykyi\Domain\Model\Game
+ * @coversDefaultClass \Dykyi\Domain\Model\MoveAction
  *
  */
 class GameTest extends TestCase
 {
-    /**
-     * @covers ::getRobotUnit
-     */
-    public function testGetRobotUnit()
-    {
-        $robotUnit = 'O';
-        $game = new Game('X', $robotUnit);
-
-        $this->assertSame($game->getRobotUnit(), $robotUnit);
-    }
-
     /**
      * @dataProvider boardDataProvider
      *
@@ -31,11 +20,10 @@ class GameTest extends TestCase
      */
     public function testGameMove($board, $result): void
     {
-        $game = new Game('X', 'O');
-        $move = $game->makeMove($board, 'X');
+        $action = new MoveAction('X', 'O');
+        $move = $action->makeMove($board, 'X');
 
         $this->assertSame($move->getIndex(), $result);
-
     }
 
     public function boardDataProvider(): array
