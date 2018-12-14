@@ -1,0 +1,37 @@
+# Intellij IDEA configs
+.git
+.idea
+.rsync_cache
+.DS_Store
+/composer.phar
+
+# NPM modules
+node_modules
+node_modules/*
+
+# SASS
+.sass-cache
+.sass-cache/*
+
+/build/
+/vendor/
+/web/bundles/*
+/web/upload/*
+/phpunit.xml
+/.web-server-pid
+/app/config/parameters.yml
+
+/var/*
+!/var/cache
+/var/cache/*
+!var/cache/.gitkeep
+!/var/logs
+/var/logs/*
+!var/logs/.gitkeep
+!/var/sessions
+/var/sessions/*
+!var/sessions/.gitkeep
+!var/SymfonyRequirements.php
+
+# Need for a docker. Do not remove please
+/web/index.php

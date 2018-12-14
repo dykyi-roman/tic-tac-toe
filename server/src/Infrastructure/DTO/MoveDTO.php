@@ -7,7 +7,7 @@ use Dykyi\Domain\ValueObject\Move;
 /**
  * Class MoveDTO
  */
-final class MoveDTO
+final class MoveDTO implements \JsonSerializable
 {
     /**
      * Variable
@@ -52,9 +52,13 @@ final class MoveDTO
     }
 
     /**
-     * @return array
+     * Specify data which should be serialized to JSON
+     * @link  https://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
      */
-    public function toArray(): array
+    public function jsonSerialize()
     {
         return [
             'result' => $this->response,

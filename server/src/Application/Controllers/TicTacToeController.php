@@ -108,7 +108,7 @@ class TicTacToeController
 
             if ((bool)getenv('cache_mode')) {
                 $cache = new MoveCacheService($this->cache);
-                $cache->execute(md5(serialize($boardState) . $playerUnit), $response->toArray());
+                $cache->execute(md5(serialize($boardState) . $playerUnit), $response);
             }
         } catch (Exception $exception) {
             return JsonResponse::create([
@@ -118,8 +118,8 @@ class TicTacToeController
         }
 
         $this->logger->info('board', $boardState);
-        $this->logger->info('move', $response->toArray());
+        $this->logger->info('move', (array)$response);
 
-        return JsonResponse::create($response->toArray());
+        return JsonResponse::create($response);
     }
 }
